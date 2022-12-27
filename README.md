@@ -42,7 +42,7 @@ It has the Google login functionality and fetching the user specific notes and t
 
 Contributions are always welcome!
 
-For front-end documentaion visit [docs](https://github.com/vikas-viki/iNotebook-frontend)
+For front-end documentaion visit [docs](https://github.com/vikas-viki/iNotebook-client)
 
 Thankyou!
 
