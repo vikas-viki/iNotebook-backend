@@ -6,8 +6,9 @@ const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var fetchuser = require('../middleware/fetchuser');
 
-const JWT_SECRET = 'Harryisagoodb$oy';
+const JWT_SECRET = 'Vikas@WDS';
 let success;
+let exists;
 // ROUTE 1: Create a User using: POST "/api/auth/createuser". No login required
 router.post('/createuser', [
   body('name', 'Enter a valid name').isLength({ min: 3 }),
@@ -24,8 +25,9 @@ router.post('/createuser', [
     // Check whether the user with this email exists already
     let user = await User.findOne({ email: req.body.email });
     if (user) {
-      success = false
-      return res.status(400).json({ error: "Sorry a user with this email already exists" })
+      success = false;
+      exists = true;
+      return res.status(400).json({ error: "Sorry a user with this email already exists",exists});
     }
     const salt = await bcrypt.genSalt(10);
     const secPass = await bcrypt.hash(req.body.password, salt);
@@ -42,10 +44,10 @@ router.post('/createuser', [
       }
     }
     const authtoken = jwt.sign(data, JWT_SECRET);
-
+    exists = false;
     success = true;
     // res.json(user)
-    res.json({ success, authtoken })
+    res.json({ success, authtoken, exists });
     success = false;
   } catch (error) {
     console.error(error.message);
